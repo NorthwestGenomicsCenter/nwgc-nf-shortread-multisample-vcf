@@ -1,1 +1,1 @@
-# nwgc-nf-multisample-vcf
+# nwgc-nf-shortread-multisample-vcf
