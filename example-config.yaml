@@ -1,0 +1,31 @@
+# Project
+projectName: "<name to use for as part of file names>"
+publishDirectory: "<full path to output directory>"
+useCRDRWholeGenomeControls: true or false
+useCRDRExomeControls: true or false
+
+# Reference Genome
+referenceGenome: "<full path to reference genome fasta>"        # e.g. referenceGenome: "/net/nwgc/vol1/references/human/grc38/genome/assembly_bwa_0.7.15/hs37d5.fa"
+isGRC38: true or false                                          # e.g. isGRC38: true
+dbSnp: "<full path to dbSnp file>"                              # e.g. dbSnp: "/net/nwgc/vol1/references/human/grc38/genome/assembly_bwa_0.7.15/Homo_sapiens_assembly38.dbsnp138.vcf" (grc38)
+                                                                # e.g. dbSnp: "/net/nwgc/vol1/references/human/snps/dbSNP/dbSNP138.vcf" (hg19)
+
+# Sequencing Target
+sequencingTarget: "<name of sequencing target>"                                                      # e.g. sequencingTarget: "nimblegen_solution_V2refseq_2010"
+sequencingTargetIntervalsDirectory: "<full path to directory with chromosome intervals list files>"  # e.g. sequencingTargetIntervalsDirectory: "/net/nwgc/vol1/references/human/grc38/targets/nimblegen_solution_V2refseq_2010"
+
+# Input
+gvcfs:
+  - "<full path to gvcf 1>"
+  - "<full path to gvcf 2>"
+  - "<full path to gvcf 3>"
+  ...
+
+sampleIds:
+  - sample ID 1
+  - sample ID 2
+  - sample ID 3
+  ...
+# Only needed if giving sampleIds as input
+sampleRootDirectory: "<full path to directory containing sample sub directories>" # e.g. "/net/nwgc/vol1/data/processed/samples"
+samplePipelineDirectoryName: "Pipeline directory name" # e.g. samplePipelineDirectoryName: "shortread-dna-seq"
