@@ -1,3 +1,7 @@
+# User
+userId: "${userId}"
+userEmail: "${userEmail}"
+
 # Project
 projectName: "<name to use for as part of file names>"
 publishDirectory: "<full path to output directory>"
