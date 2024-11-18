@@ -14,7 +14,8 @@ workflow {
     def dbSnp = params.dbSnp
     def chrTag = params.isGRC38 ? "chr" : ""
     def chr25 = params.isGRC38 ? "M" : "MT"
-    ch_chromosomes = Channel.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, "X", "Y", chr25)
+    chromosomes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, "X", "Y", chr25]
+    ch_chromosomes = Channel.fromList(chromosomes)
     def genotypingTargetPrefix = chrTag
     def genotypingTargetSuffix = ""
     if (!params.sequencingTarget.equals('WHOLE_GENOME')) {
@@ -71,7 +72,7 @@ workflow {
             }
         }
 
-        ch_gvcfBatches = Channel.empty()
+        gvcfBatches = []
         for (int batchNum = 1; batchNum <= numBatches; batchNum++) {
             int gvcfStartId = (batchNum - 1) * batchSize;
             int gvcfEndId = gvcfStartId + batchSize;
@@ -80,10 +81,12 @@ workflow {
             if (batchNum == numBatches)
                 gvcfEndId = numSamples;
             
-            // Creates a tuple with the batch gvcfs, batch id, and each of the 25 chromsomes.
-            ch_gvcfBatch = ch_chromosomes.map { def chr -> [gvcfs.subList(gvcfStartId, gvcfEndId), tbis.subList(gvcfStartId, gvcfEndId), chr, batchNum] }
-            ch_gvcfBatches = ch_gvcfBatches.mix(ch_gvcfBatch);
+            // Creates a tuple with the batch gvcfs, batch tbis, batch id, and each of the 25 chromsomes.
+            for (def chr : chromosomes) {
+                gvcfBatches.add([gvcfs.subList(gvcfStartId, gvcfEndId), tbis.subList(gvcfStartId, gvcfEndId), chr, batchNum])
+            }
         }
+        ch_gvcfBatches = Channel.fromList(gvcfBatches)
 
         GATK_COMBINE_GVCFS(ch_gvcfBatches, chrTag, projectName, referenceGenome)
         // Override gvcf and tbi channels with the batch gvcfs / tbis (by chromosome)
