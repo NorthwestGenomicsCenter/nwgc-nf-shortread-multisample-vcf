@@ -14,12 +14,13 @@ workflow {
     def dbSnp = params.dbSnp
     def chrTag = params.isGRC38 ? "chr" : ""
     def chr25 = params.isGRC38 ? "M" : "MT"
+    def referenceName = params.isGRC38 ? "grc38" : "hg19"
     chromosomes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, "X", "Y", chr25]
     ch_chromosomes = Channel.fromList(chromosomes)
     def genotypingTargetPrefix = chrTag
     def genotypingTargetSuffix = ""
     if (!params.sequencingTarget.equals('WHOLE_GENOME')) {
-        genotypingTargetPrefix = "${params.sequencingTargetIntervalsDirectory}/${params.sequencingTarget}.chr"
+        genotypingTargetPrefix = "${params.sequencingTargetIntervalsDirectory}/${params.sequencingTarget}.${referenceName}.chr"
         genotypingTargetSuffix = ".list"
     }
     def useCRDRExomeControls = params.useCRDRExomeControls
