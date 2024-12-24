@@ -115,7 +115,7 @@ workflow {
                         tbiControls.add("/net/nwgc/vol1/references/human/grc38/multisample_controls/whole_genome/crdr_control_genomes.merged.${crdrBatchId}.chr${chr}.gvcf.gz.tbi")
                     }
                     else if (useCRDRExomeControls) {
-                        tbiControls.add("/net/nwgc/vol1/references/human/grc38/multisample_controls/exome/crdr_control_exomes.merged.${crdrBatchId}.chr${chr}.gvcf.gz")
+                        tbiControls.add("/net/nwgc/vol1/references/human/grc38/multisample_controls/exome/crdr_control_exomes.merged.${crdrBatchId}.chr${chr}.gvcf.gz.tbi")
                     }
                 }
                 return [chr, tbiControls]
