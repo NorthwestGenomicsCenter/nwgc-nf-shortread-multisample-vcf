@@ -140,7 +140,7 @@ workflow {
         | set { ch_genotypeTargetInput }
     }
     else {
-        ch_genotypeTargetInput = ch_chromosomes.map { def chr -> [gvcfs, tbis, chr, "${genotypingTargetPrefix}${chromosome}${genotypingTargetSuffix}"] } 
+        ch_genotypeTargetInput = ch_chromosomes.map { def chr -> [gvcfs, tbis, chr, "${genotypingTargetPrefix}${chr}${genotypingTargetSuffix}"] } 
     }
 
     
